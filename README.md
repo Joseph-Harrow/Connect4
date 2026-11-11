@@ -1,2 +1,2 @@
 # Connect4
-Practise Connect 4 Game
+A simple Connect 4 game, starting from a Python version created as part of "Build Connect Four Using Python" Codecademy course.

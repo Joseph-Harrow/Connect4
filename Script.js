@@ -90,7 +90,7 @@ function check_fours(board, piece){
     //Diagonal \ fours
     for (let row = 0;row<board.length-3;row++){
         for (let i = 0;i<board[0].length-3;i++){
-            if (board[row][i]=== piece && board[row+1][i+1]=== piece && board[row+2][i+1]=== piece && board[row+3][i+1]=== piece){
+            if (board[row][i]=== piece && board[row+1][i+1]=== piece && board[row+2][i+2]=== piece && board[row+3][i+3]=== piece){
                 return true
             }
         }
@@ -99,7 +99,7 @@ function check_fours(board, piece){
     //Diagonal / fours
     for (let row = 3;row<board.length;row++){
         for (let i = 0;i<board[0].length-3;i++){
-            if (board[row][i]=== piece && board[row-1][i+1]=== piece && board[row-2][i+1]=== piece && board[row-3][i+1]=== piece){
+            if (board[row][i]=== piece && board[row-1][i+1]=== piece && board[row-2][i+2]=== piece && board[row-3][i+3]=== piece){
                 return true
             }
         }

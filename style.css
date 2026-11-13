@@ -1,0 +1,32 @@
+.gameBase{
+  width: 420px;
+  height: 370px;
+  display: block;
+  margin: 0 auto;
+  background-color: gray;
+    padding: 0;
+}
+.buttonBase{
+  width: 420px;
+  height: 64px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+  background-color: gray;
+  padding: 0;
+}
+
+.key{
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+    display: inline flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 0;
+    margin-left: 13px;
+    margin-top:11px;
+    margin-right: 0;
+    margin-bottom:0;    
+}

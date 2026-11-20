@@ -1,6 +1,7 @@
 let current_board = [[" "," "," "," "," "," "," "],[" "," "," "," "," "," "," "],[" "," "," "," "," "," "," "],[" "," "," "," "," "," "," "],[" "," "," "," "," "," "," "],[" "," "," "," "," "," "," "]]
 let current_color = "red"
 let current_piece = "X"
+let current_mode = "onePlayer"
 let active_game = true
 
 //Create the circlular slots on the game board
@@ -27,6 +28,7 @@ function AddButtons(event){
 
 window.addEventListener("load", AddSlots)
 window.addEventListener("load", AddButtons)
+document.getElementById("startGame").addEventListener("click",gameStart)
 document.getElementsByClassName("TextBase")[0].addEventListener("click",gameReset)
 
 //Add click indicator color change on buttons
@@ -40,7 +42,7 @@ function keyReturn(event){
 function notePress(note){
   note.onmousedown = keyPlay;
   note.onmouseup = keyReturn;
-  note.onclick = () => progress_game(current_board,Number(note.innerHTML));
+  note.onclick = () => progressGame(current_board,Number(note.innerHTML));
 }
 
 //Function to get color from piece name
@@ -148,8 +150,76 @@ function gameReset(){
   }
 }
 
+function gameStart(){
+  active_game=false
+  gameReset()
+  current_mode = document.querySelector('input[name="drone"]:checked').value;
+  document.getElementsByClassName("gameBase")[0].style.visibility = "visible"
+  document.getElementsByClassName("buttonBase")[0].style.visibility = "visible"
+  document.getElementsByClassName("TextBase")[0].style.visibility = "visible"
+}
+
+function addComputerPiece(board){
+  let pieceAdded = false;
+  let randCol = 0
+  while (!pieceAdded){
+    randCol = Math.floor(Math.random()*7)+1
+    if (validColumn(board, randCol)===true){
+      add_piece(board, "O", randCol)
+      pieceAdded = true
+    } 
+  }
+}
+
 //Function that tries to progress the game one state upon button press
-function progress_game(board,column){
+function progressGameTwoPlayer(board){
+  //If piece added, check for end of game after
+  if (check_fours(board, current_piece)){
+    document.getElementById("Message").innerHTML= "<a style='color:"+pieceColor(current_piece)+";'>"+pieceColor(current_piece)[0].toUpperCase() + pieceColor(current_piece).slice(1)+"</a> has won! Click here to reset."
+    active_game = false
+  } else if (any_spaces(board)===false){
+    document.getElementById("Message").innerHTML="It's a tie! Click here to reset."
+    active_game = false
+  } else{
+    if (current_piece === "X"){
+      current_piece = "O"
+    } else{
+      current_piece = "X"
+    }
+    document.getElementById("Message").innerHTML= "It is now <a style='color:"+pieceColor(current_piece)+";'>"+pieceColor(current_piece)[0].toUpperCase() + pieceColor(current_piece).slice(1)+"</a>'s turn."
+}
+}
+
+function progressGameOnePlayer(board){
+  //If piece added, check for end of game after
+  if (check_fours(board, current_piece)){
+    document.getElementById("Message").innerHTML= "<a style='color:"+pieceColor(current_piece)+";'>"+pieceColor(current_piece)[0].toUpperCase() + pieceColor(current_piece).slice(1)+"</a> has won! Click here to reset."
+    active_game = false
+  } else if (any_spaces(board)===false){
+    document.getElementById("Message").innerHTML="It's a tie! Click here to reset."
+    active_game = false
+  }
+  if (active_game){
+    //If game not over, add Computer's piece and check for end of game after
+    addComputerPiece(board)
+    if (check_fours(board, "O")){
+      document.getElementById("Message").innerHTML= "<a style='color:"+pieceColor("O")+";'>"+pieceColor("O")[0].toUpperCase() + pieceColor("O").slice(1)+"</a> has won! Click here to reset."
+      active_game = false
+    } else if (any_spaces(board)===false){
+      document.getElementById("Message").innerHTML="It's a tie! Click here to reset."
+      active_game = false
+    }
+    //Prompt players next move
+    if (active_game){
+      document.getElementById("Message").innerHTML= "It is now <a style='color:"+pieceColor(current_piece)+";'>"+pieceColor(current_piece)[0].toUpperCase() + pieceColor(current_piece).slice(1)+"</a>'s turn."
+    }
+  }
+  
+  
+}
+
+
+function progressGame(board,column){
   //Check currently active game
   if (active_game===false){
     return
@@ -161,19 +231,10 @@ function progress_game(board,column){
   } else{
     add_piece(board, current_piece, column)
   }
-  //If piece added, check for end of game after
-  if (check_fours(current_board, current_piece)){
-    document.getElementById("Message").innerHTML= "<a style='color:"+pieceColor(current_piece)+";'>"+pieceColor(current_piece)[0].toUpperCase() + pieceColor(current_piece).slice(1)+"</a> has won! Click here to reset."
-    active_game = false
-  } else if (any_spaces(current_board)===false){
-    document.getElementById("Message").innerHTML="It's a tie! Click here to reset."
-    active_game = false
-  } else{
-    if (current_piece === "X"){
-      current_piece = "O"
-    } else{
-      current_piece = "X"
-    }
-    document.getElementById("Message").innerHTML= "It is now <a style='color:"+pieceColor(current_piece)+";'>"+pieceColor(current_piece)[0].toUpperCase() + pieceColor(current_piece).slice(1)+"</a>'s turn."
-}
+  if (current_mode==="onePlayer"){
+    progressGameOnePlayer(board)
+  } else if (current_mode==="twoPlayer"){
+    progressGameTwoPlayer(board)
+  }
+  
 }

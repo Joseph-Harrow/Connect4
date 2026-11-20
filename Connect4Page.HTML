@@ -7,7 +7,23 @@
 <body>
     <h1>Connect 4 Game</h1>
     <h2>By Joe Harrow</h2>
-    
+    <fieldset style="display: inline-flex; gap: 10px;">
+        <legend>Select the number of players:</legend>
+        <div>
+            <input type="radio" id="onePlayer" name="drone" value="onePlayer" checked />
+            <label for="onePlayer">One Player (Against Computer)</label>
+        </div>  
+        <br>
+        <div>
+            <input type="radio" id="twoPlayer" name="drone" value="twoPlayer" />
+            <label for="twoPlayer">Two Players</label>
+        </div>
+        <br>
+        <div>
+            <input type="button" id="startGame" value="Start Game" />
+        </div>
+    </fieldset>
+    <br>
     <section class="gameBase"></section>
     <section class="buttonBase"></section>
     <section class="TextBase"><div id="Message" style="color: white;">Welcome to Connect 4! It is <a style="color: red;">Red</a>'s turn.</div></section>

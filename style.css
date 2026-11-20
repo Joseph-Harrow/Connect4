@@ -5,6 +5,7 @@
   margin: 0 auto;
   background-color: gray;
     padding: 0;
+  visibility: hidden;
 }
 .buttonBase{
   width: 420px;
@@ -14,6 +15,7 @@
   margin-top: 10px;
   background-color: gray;
   padding: 0;
+  visibility: hidden;
 }
 .TextBase{
   width: 420px;
@@ -25,6 +27,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  visibility: hidden;
 }
 
 .key{
@@ -40,4 +43,5 @@
     margin-top:11px;
     margin-right: 0;
     margin-bottom:0;    
+    user-select: none;
 }
